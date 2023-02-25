@@ -93,7 +93,7 @@ class ContactHelper{
     return Sqflite.firstIntValue(await dbContact!.rawQuery("SELECT COUNT(*) FROM $contactTable"))!;
   }
 
-  Future close() async {
+  Future  close() async {
     Database? dbContact = await db;
     dbContact!.close();
   }
@@ -106,7 +106,7 @@ class Contact {
   String? email;
   String? phone;
   String? img;
-
+  Contact();
   Contact.fromMap(Map map){
     id = map["idColumn"];
     name = map["nameColumn"];
