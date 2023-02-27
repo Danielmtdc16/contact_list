@@ -80,15 +80,15 @@ class ContactHelper{
   Future<List> getAllContacts() async {
     Database? dbContact = await db;
     List listMap = await dbContact!.rawQuery("SELECT * FROM $contactTable");
-    List<Contact>? listContact;
+    List<Contact> listContact = [];
     for (Map m in listMap) {
-      listContact!.add(Contact.fromMap(m));
+      listContact.add(Contact.fromMap(m));
     }
 
-    return listContact!;
+    return listContact;
   }
 
-  Future<int?> getNumber() async {
+  Future<int> getNumber() async {
     Database? dbContact = await db;
     return Sqflite.firstIntValue(await dbContact!.rawQuery("SELECT COUNT(*) FROM $contactTable"))!;
   }
@@ -96,6 +96,11 @@ class ContactHelper{
   Future  close() async {
     Database? dbContact = await db;
     dbContact!.close();
+  }
+  
+  void deleteAll() async {
+    Database? dbContact = await db;
+    dbContact!.delete(contactTable, where: "$idColumn != -1");
   }
 }
 
