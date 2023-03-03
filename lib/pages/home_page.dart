@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/contact_helper.dart';
-import '../constantes.dart';
+import 'package:contact_list/constantes.dart';
+import 'package:contact_list/models/contact.dart';
+import 'package:contact_list/models/contact_helper.dart';
+import 'package:contact_list/widgets/card_contact.dart';
 import 'e.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ContactHelper helper = ContactHelper();
 
-  List<Contact> contacts = [];
+  Map<String, List<Contact>> lettersContacts = {};
 
   @override
   void initState() {
@@ -21,28 +23,39 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
 
-    Contact c = Contact();
-    c.name = "D";
-    c.email = "as";
-    c.phone = "sdas";
-    c.img = "asds";
+
     Contact d = Contact();
     d.name = "D";
     d.email = "as";
     d.phone = "sdas";
-    d.img = "asds";
+    d.img = "images/img-padrao.png";
+    Contact c = Contact();
+    c.name = "C";
+    c.email = "as";
+    c.phone = "sdas";
+    c.img = "images/img-padrao.png";
+    Contact e = Contact();
+    e.name = "E";
+    e.email = "as";
+    e.phone = "sdas";
+    e.img = "images/img-padrao.png";
+    Contact a = Contact();
+    a.name = "A";
+    a.email = "as";
+    a.phone = "sdas";
+    a.img = "images/img-padrao.png";
 
     helper.saveContact(c);
     helper.saveContact(d);
+    helper.saveContact(e);
+    helper.saveContact(a);
 
-    helper.getAllContacts().then((list) {
+    helper.getAllContacts().then((map) {
       setState(() {
-        contacts = list as List<Contact>;
+        lettersContacts = map;
       });
     });
 
-    print(contacts.length);
-    helper.deleteAll();
   }
 
   @override
@@ -141,62 +154,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 15.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, bottom: 5),
-                  child: const Text(
-                    "A",
-                    style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 17),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: kbackgroundContact,
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: contacts.length,
-                    itemBuilder: (context, index) {
-                      print(contacts.length);
-                      return _contactCard(context, index);
-                    },
-                  ),
-                ),
-                SizedBox(height: 10,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, bottom: 5),
-                  child: const Text(
-                    "B",
-                    style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 17),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: kbackgroundContact,
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: contacts.length,
-                    itemBuilder: (context, index) {
-                      print(contacts.length);
-                      return _contactCard(context, index);
-                    },
-                  ),
-                ),
+                gerarQuadro(),
               ],
             ),
           ),
@@ -205,39 +163,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _contactCard(BuildContext context, int index) {
-    return GestureDetector(
-      child: const Column(
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                child: Text("oi"),
-                backgroundColor: Colors.blue,
-              ),
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.only(left: 17.0),
-                child: Text(
-                  "SDASD",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20, left: 50),
-            child: Divider(
-              color: Colors.white10,
-              height: 19,
-              thickness: 1,
-            ),
-          )
-        ],
-      ),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => E()));
-      },
-    );
+  gerarQuadro() {
+    print("tamanho do map: ${lettersContacts.length}");
+    return Column(
+        children: List.generate(lettersContacts.length, (index) {
+          List<String> keys = lettersContacts.keys.toList();
+          print("keys: ${keys}");
+          return CardContact(lettersContacts: lettersContacts, letter: keys[index]);
+        }
+        ));
   }
 }

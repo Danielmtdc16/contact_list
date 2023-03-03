@@ -1,15 +1,13 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:contact_list/constantes.dart';
+import 'package:contact_list/models/contact.dart';
+import 'package:contact_list/constantes.dart';
 import 'dart:async';
 
-const String contactTable = "contactTable";
-const String idColumn = "idColumn";
-const String nameColumn = "nameColumn";
-const String emailColumn = "emailColumn";
-const String phoneColumn = "phoneColumn";
-const String imgColumn = "imgColumn";
-
 class ContactHelper{
+
+  Contact contact = Contact();
 
   static final ContactHelper _instance = ContactHelper.internal();
 
@@ -77,15 +75,32 @@ class ContactHelper{
     );
   }
 
-  Future<List> getAllContacts() async {
+  Future<Map<String, List<Contact>>> getAllContacts() async {
     Database? dbContact = await db;
     List listMap = await dbContact!.rawQuery("SELECT * FROM $contactTable");
     List<Contact> listContact = [];
+    Map<String, List<Contact>> lettersContacts = {};
+    List<Contact> temporaryContacts = [];
     for (Map m in listMap) {
       listContact.add(Contact.fromMap(m));
     }
+    print("tamanho da lista quando obtem do banco> ${listContact.length}");
+    for (int letter = 0; letter < kletters.length; letter++){
+      for (int contact = 0; contact < listContact.length; contact++){
+        if (listContact[contact].name != null) {
+          if (listContact[contact].name![0].toUpperCase() == kletters[letter]) {
+            print("Salvei o contato de nome: ${listContact[contact].name}");
+            temporaryContacts.add(listContact[contact]);
+          }
+        }
+      }
+      if (temporaryContacts.length > 0) {
+        lettersContacts[kletters[letter]] = temporaryContacts;
+      }
+      temporaryContacts = [];
+    }
 
-    return listContact;
+    return lettersContacts;
   }
 
   Future<int> getNumber() async {
@@ -101,36 +116,5 @@ class ContactHelper{
   void deleteAll() async {
     Database? dbContact = await db;
     dbContact!.delete(contactTable, where: "$idColumn != -1");
-  }
-}
-
-class Contact {
-
-  int? id;
-  String? name;
-  String? email;
-  String? phone;
-  String? img;
-  Contact();
-  Contact.fromMap(Map map){
-    id = map["idColumn"];
-    name = map["nameColumn"];
-    email = map["emailColumn"];
-    phone = map["phoneColumn"];
-    img = map["imgColumn"];
-  }
-
-  Map toMap(){
-    Map<String, dynamic> map = {
-      nameColumn: name,
-      emailColumn: email,
-      phoneColumn: phone,
-      imgColumn: img,
-    };
-
-    if (id != null){
-      map[idColumn] = id;
-    }
-    return map;
   }
 }
