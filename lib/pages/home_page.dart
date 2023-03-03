@@ -164,11 +164,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   gerarQuadro() {
-    print("tamanho do map: ${lettersContacts.length}");
     return Column(
         children: List.generate(lettersContacts.length, (index) {
           List<String> keys = lettersContacts.keys.toList();
-          print("keys: ${keys}");
           return CardContact(lettersContacts: lettersContacts, letter: keys[index]);
         }
         ));

@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
-import 'package:contact_list/constantes.dart';
 import 'dart:async';
 
 class ContactHelper{
@@ -84,17 +83,15 @@ class ContactHelper{
     for (Map m in listMap) {
       listContact.add(Contact.fromMap(m));
     }
-    print("tamanho da lista quando obtem do banco> ${listContact.length}");
     for (int letter = 0; letter < kletters.length; letter++){
       for (int contact = 0; contact < listContact.length; contact++){
         if (listContact[contact].name != null) {
           if (listContact[contact].name![0].toUpperCase() == kletters[letter]) {
-            print("Salvei o contato de nome: ${listContact[contact].name}");
             temporaryContacts.add(listContact[contact]);
           }
         }
       }
-      if (temporaryContacts.length > 0) {
+      if (temporaryContacts.isNotEmpty) {
         lettersContacts[kletters[letter]] = temporaryContacts;
       }
       temporaryContacts = [];
