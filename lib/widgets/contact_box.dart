@@ -1,20 +1,21 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
+import 'dart:io';
 
-class CardContact extends StatefulWidget {
+
+class ContactBox extends StatefulWidget {
 
   final Map<String, List<Contact>> lettersContacts;
   final String letter;
 
-  const CardContact({Key? key, required this.lettersContacts, required this.letter}) : super(key: key);
+  const ContactBox({Key? key, required this.lettersContacts, required this.letter}) : super(key: key);
 
   @override
-  State<CardContact> createState() => _CardContactState();
+  State<ContactBox> createState() => _ContactBoxState();
 }
 
-class _CardContactState extends State<CardContact> {
+class _ContactBoxState extends State<ContactBox> {
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +34,16 @@ class _CardContactState extends State<CardContact> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 17),
+          padding: const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 17),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             color: kbackgroundContact,
           ),
           child: ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: widget.lettersContacts[widget.letter]!.length,
             itemBuilder: (context, index) {
-              print(index);
               return _cardContact(context, index);
             },
           ),

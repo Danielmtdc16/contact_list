@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
 import 'package:contact_list/models/contact_helper.dart';
-import 'package:contact_list/widgets/card_contact.dart';
-import 'e.dart';
+import 'package:contact_list/widgets/contact_box.dart';
+import 'contact_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -132,7 +132,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 17),
-                  width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: kbackgroundContact,
@@ -154,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                gerarQuadro(),
+                generateContactBox(),
               ],
             ),
           ),
@@ -163,11 +162,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  gerarQuadro() {
+  generateContactBox() {
     return Column(
         children: List.generate(lettersContacts.length, (index) {
           List<String> keys = lettersContacts.keys.toList();
-          return CardContact(lettersContacts: lettersContacts, letter: keys[index]);
+          return ContactBox(lettersContacts: lettersContacts, letter: keys[index]);
         }
         ));
   }

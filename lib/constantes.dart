@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kbackgroundContact = Color(0xFF292929);
+const Color kcolorIconsContactPage = Color(0xFF1DD2FC);
 
 const String contactTable = "contactTable";
 const String idColumn = "idColumn";
