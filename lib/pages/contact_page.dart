@@ -37,18 +37,18 @@ class _ContactPageState extends State<ContactPage> {
           child: Column(
             children: [
               GestureDetector(
-                child: Container(
-                  width: 80.0,
-                  height: 80.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: _editedContact!.img != null
-                            ? FileImage(File(_editedContact!.img!))
-                            : Image.asset("images/img-padrao.png").image),
+                child: CircleAvatar(
+                  maxRadius: 40,
+                  backgroundColor: Colors.blue,
+                  backgroundImage: _editedContact!.img != null ?
+                                   FileImage(File(_editedContact!.img!)) :
+                                   null,
+                  child: Center(
+                    child: Icon(Icons.camera_alt),
                   ),
                 ),
               ),
+              SizedBox(height: 10,),
               Container(
                 padding: EdgeInsets.only(left: 17),
                 height: 50,
@@ -70,7 +70,7 @@ class _ContactPageState extends State<ContactPage> {
                         ),
                         decoration: InputDecoration(
                           hintText: "Nome",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white54,),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(
@@ -110,7 +110,7 @@ class _ContactPageState extends State<ContactPage> {
                         ),
                         decoration: InputDecoration(
                           hintText: "Telefone",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white54),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(
@@ -151,7 +151,7 @@ class _ContactPageState extends State<ContactPage> {
                         ),
                         decoration: InputDecoration(
                           hintText: "Email",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white54),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(
