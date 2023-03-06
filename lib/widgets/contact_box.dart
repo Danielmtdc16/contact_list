@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
+import 'package:contact_list/pages/contact_page.dart';
 import 'dart:io';
 
 
@@ -76,6 +77,9 @@ class _ContactBoxState extends State<ContactBox> {
           _generateDivider(index)
         ],
       ),
+      onTap: (){
+        _showContactPage(widget.lettersContacts[widget.letter]![index]);
+      },
     );
   }
   
@@ -100,5 +104,8 @@ class _ContactBoxState extends State<ContactBox> {
     return Container();
   }
 
+  void _showContactPage(Contact contact) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ContactPage(contact: contact)));
+  }
 
 }

@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
 
-
     Contact d = Contact();
     d.name = "D";
     d.email = "as";
@@ -55,7 +54,6 @@ class _HomePageState extends State<HomePage> {
         lettersContacts = map;
       });
     });
-
   }
 
   @override
@@ -93,7 +91,16 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContactPage(
+                                  contact: null,
+                                ),
+                              ),
+                            );
+                          },
                           icon: Icon(
                             Icons.add,
                             color: Colors.white,
@@ -147,9 +154,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Expanded(
                           child: Text(
-                            "SDASD",
-                            style: TextStyle(color: Colors.white),
-                          )),
+                        "SDASD",
+                        style: TextStyle(color: Colors.white),
+                      )),
                     ],
                   ),
                 ),
@@ -165,9 +172,8 @@ class _HomePageState extends State<HomePage> {
   generateContactBox() {
     return Column(
         children: List.generate(lettersContacts.length, (index) {
-          List<String> keys = lettersContacts.keys.toList();
-          return ContactBox(lettersContacts: lettersContacts, letter: keys[index]);
-        }
-        ));
+      List<String> keys = lettersContacts.keys.toList();
+      return ContactBox(lettersContacts: lettersContacts, letter: keys[index]);
+    }));
   }
 }

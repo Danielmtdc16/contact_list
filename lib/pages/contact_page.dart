@@ -13,7 +13,12 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+
+  bool _userEdited = false;
   Contact? _editedContact;
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   @override
   void initState() {
@@ -24,6 +29,10 @@ class _ContactPageState extends State<ContactPage> {
       _editedContact = Contact();
     } else {
       _editedContact = Contact.fromMap(widget.contact!.toMap());
+
+      _nameController.text = _editedContact!.name!;
+      _phoneController.text = _editedContact!.phone!;
+      _emailController.text = _editedContact!.email!;
     }
   }
 
@@ -62,6 +71,7 @@ class _ContactPageState extends State<ContactPage> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: _nameController,
                         textAlignVertical: TextAlignVertical.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -102,6 +112,7 @@ class _ContactPageState extends State<ContactPage> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: _phoneController,
                         textAlignVertical: TextAlignVertical.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -123,7 +134,7 @@ class _ContactPageState extends State<ContactPage> {
                           ),
                           contentPadding: EdgeInsets.zero,
                         ),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.phone,
                       ),
                     ),
                   ],
@@ -143,6 +154,7 @@ class _ContactPageState extends State<ContactPage> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: _emailController,
                         textAlignVertical: TextAlignVertical.center,
                         style: TextStyle(
                           color: Colors.white,
