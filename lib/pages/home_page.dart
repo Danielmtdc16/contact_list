@@ -23,37 +23,8 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
 
-    Contact d = Contact();
-    d.name = "D";
-    d.email = "as";
-    d.phone = "sdas";
-    d.img = "images/img-padrao.png";
-    Contact c = Contact();
-    c.name = "C";
-    c.email = "as";
-    c.phone = "sdas";
-    c.img = "images/img-padrao.png";
-    Contact e = Contact();
-    e.name = "E";
-    e.email = "as";
-    e.phone = "sdas";
-    e.img = "images/img-padrao.png";
-    Contact a = Contact();
-    a.name = "A";
-    a.email = "as";
-    a.phone = "sdas";
-    a.img = "images/img-padrao.png";
-
-    helper.saveContact(c);
-    helper.saveContact(d);
-    helper.saveContact(e);
-    helper.saveContact(a);
-
-    helper.getAllContacts().then((map) {
-      setState(() {
-        lettersContacts = map;
-      });
-    });
+    _getAllContacts();
+    helper.deleteAll();
   }
 
   @override
@@ -92,14 +63,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ContactPage(
-                                  contact: null,
-                                ),
-                              ),
-                            );
+                            _showContactPage();
                           },
                           icon: Icon(
                             Icons.add,
@@ -175,5 +139,30 @@ class _HomePageState extends State<HomePage> {
       List<String> keys = lettersContacts.keys.toList();
       return ContactBox(lettersContacts: lettersContacts, letter: keys[index]);
     }));
+  }
+
+  void _showContactPage({Contact? contact}) async {
+    final recContact = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ContactPage(contact: contact),
+      ),
+    );
+    if (recContact != null){
+      print("O contato é ${recContact!.name}");
+      if (contact == null){
+        await helper.saveContact(recContact);
+        _getAllContacts();
+      }
+    }
+  }
+
+  void _getAllContacts(){
+    helper.getAllContacts().then((map) {
+      setState(() {
+        lettersContacts = map;
+        print(lettersContacts.length);
+      });
+    });
   }
 }

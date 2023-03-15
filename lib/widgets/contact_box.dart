@@ -2,21 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
 import 'package:contact_list/pages/contact_page.dart';
+import 'package:contact_list/models/contact_helper.dart';
 import 'dart:io';
 
-
 class ContactBox extends StatefulWidget {
-
   final Map<String, List<Contact>> lettersContacts;
   final String letter;
 
-  const ContactBox({Key? key, required this.lettersContacts, required this.letter}) : super(key: key);
+  const ContactBox(
+      {Key? key, required this.lettersContacts, required this.letter})
+      : super(key: key);
 
   @override
   State<ContactBox> createState() => _ContactBoxState();
 }
 
 class _ContactBoxState extends State<ContactBox> {
+
+  ContactHelper helper = ContactHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class _ContactBoxState extends State<ContactBox> {
     );
   }
 
-  Widget _cardContact(BuildContext context, int index){
+  Widget _cardContact(BuildContext context, int index) {
     return GestureDetector(
       child: Column(
         children: [
@@ -77,21 +80,24 @@ class _ContactBoxState extends State<ContactBox> {
           _generateDivider(index)
         ],
       ),
-      onTap: (){
+      onTap: () {
         _showContactPage(widget.lettersContacts[widget.letter]![index]);
+        print("Chamei a contactPage");
       },
     );
   }
-  
-  String _organizer(int index){
-    if (widget.lettersContacts[widget.letter]![index].name == null || widget.lettersContacts[widget.letter]![index].name![0].toUpperCase() != widget.letter){
+
+  String _organizer(int index) {
+    if (widget.lettersContacts[widget.letter]![index].name == null ||
+        widget.lettersContacts[widget.letter]![index].name![0].toUpperCase() !=
+            widget.letter) {
       return "";
     }
     return widget.lettersContacts[widget.letter]![index].name!;
   }
 
-  Widget _generateDivider(int index){
-    if (index + 1 != widget.lettersContacts[widget.letter]!.length){
+  Widget _generateDivider(int index) {
+    if (index + 1 != widget.lettersContacts[widget.letter]!.length) {
       return const Padding(
         padding: EdgeInsets.only(right: 20, left: 50),
         child: Divider(
@@ -100,12 +106,22 @@ class _ContactBoxState extends State<ContactBox> {
           thickness: 1,
         ),
       );
-    } 
+    }
     return Container();
   }
 
-  void _showContactPage(Contact contact) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ContactPage(contact: contact)));
-  }
+  void _showContactPage(Contact contact) async {
+    final recContact = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ContactPage(contact: contact),
+      ),
+    );
+    if (recContact != null){
 
+      await helper.updateContact(recContact);
+      helper.getAllContacts();
+
+    }
+  }
 }
