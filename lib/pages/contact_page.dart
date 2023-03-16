@@ -1,5 +1,8 @@
+import 'package:contact_list/widgets/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_list/models/contact.dart';
+import 'package:contact_list/widgets/custom_text_field.dart';
+import 'package:contact_list/widgets/custom_button.dart';
 import 'package:contact_list/constantes.dart';
 import 'dart:io';
 
@@ -57,157 +60,52 @@ class _ContactPageState extends State<ContactPage> {
                     backgroundColor: Colors.blue,
                     backgroundImage: _editedContact!.img != null
                         ? FileImage(File(_editedContact!.img!))
-                        : Image.asset("images/img-padrao.png",).image,
+                        : Image.asset(
+                            "images/img-padrao.png",
+                          ).image,
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: 17),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: kbackgroundContact,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    textBaseline: TextBaseline.ideographic,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _nameController,
-                          focusNode: _nameFocus,
-                          textAlignVertical: TextAlignVertical.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Nome",
-                            hintStyle: TextStyle(
-                              color: Colors.white54,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.person_outline,
-                              color: kcolorIconsContactPage,
-                            ),
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                          onChanged: (text) {
-                            setState(() {
-                              _editedContact!.name = text;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                CustomTextField(
+                  controller: _nameController,
+                  hintText: "Nome",
+                  fieldType: TextInputType.text,
+                  icon: Icons.person_outline,
+                  onChanged: (text) {
+                    setState(() {
+                      _editedContact!.name = text;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: 17),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: kbackgroundContact,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    textBaseline: TextBaseline.ideographic,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _phoneController,
-                          textAlignVertical: TextAlignVertical.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Telefone",
-                            hintStyle: TextStyle(color: Colors.white54),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.phone_outlined,
-                              color: kcolorIconsContactPage,
-                            ),
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                          keyboardType: TextInputType.phone,
-                          onChanged: (number) {
-                            setState(() {
-                              _editedContact!.phone = number;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                CustomTextField(
+                  controller: _phoneController,
+                  hintText: "Telefone",
+                  fieldType: TextInputType.phone,
+                  icon: Icons.phone_outlined,
+                  onChanged: (number) {
+                    setState(() {
+                      _editedContact!.phone = number;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: 17),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: kbackgroundContact,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    textBaseline: TextBaseline.ideographic,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _emailController,
-                          textAlignVertical: TextAlignVertical.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            hintStyle: TextStyle(color: Colors.white54),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.email_outlined,
-                              color: kcolorIconsContactPage,
-                            ),
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          onChanged: (text) {
-                            setState(() {
-                              _editedContact!.email = text;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                CustomTextField(
+                  controller: _emailController,
+                  hintText: "Email",
+                  fieldType: TextInputType.emailAddress,
+                  icon: Icons.email_outlined,
+                  onChanged: (text) {
+                    setState(() {
+                      _editedContact!.email = text;
+                    });
+                  },
                 ),
               ],
             ),
@@ -220,24 +118,14 @@ class _ContactPageState extends State<ContactPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            GestureDetector(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.check,
-                    color: kcolorIconsContactPage,
-                  ),
-                  Text(
-                    'Salvar',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  )
-                ],
-              ),
+            CustomButton(
+              icon: Icons.check,
+              textInfo: "Salvar",
               onTap: () {
-                if (_nameController.text.isNotEmpty && _phoneController.text.isNotEmpty) {
-                  if (_emailController.text.isEmpty){
-                    _editedContact!.email = ' ';
+                if (_nameController.text.isNotEmpty &&
+                    _phoneController.text.isNotEmpty) {
+                  if (_emailController.text.isEmpty) {
+                    _editedContact!.email = "";
                     Navigator.pop(context, _editedContact);
                     return;
                   }
@@ -245,40 +133,18 @@ class _ContactPageState extends State<ContactPage> {
                 } else {
                   showDialog(
                     context: context,
-                    builder: (_) => AlertDialog(
-                      backgroundColor: kbackgroundContact,
-                      title: Text(
-                        "Ops...",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white54,
-                        ),
-                      ),
-                      content: Text(
-                        "Há campos em branco.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white54,
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    builder: (_) => const CustomAlertDialog(
+                      title: "Informação",
+                      contentInfo: "Há campos vazios",
                     ),
                   );
                 }
               },
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.delete_outline,
-                  color: kcolorIconsContactPage,
-                ),
-                Text(
-                  'Excluir',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                )
-              ],
+            CustomButton(
+              icon: Icons.delete_outline,
+              textInfo: "Excluir",
+              onTap: (){},
             ),
           ],
         ),
