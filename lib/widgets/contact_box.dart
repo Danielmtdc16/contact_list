@@ -60,24 +60,25 @@ class _ContactBoxState extends State<ContactBox> {
     return GestureDetector(
       child: Column(
         children: [
-          Row(
-            children: <Widget>[
-              const CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Text("oi"),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 17.0),
+          SizedBox(
+            height: 50,
+            child: Row(
+              children: <Widget>[
+                const CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  child: Text("oi"),
+                ),
+                const SizedBox(width: 17,),
+                Expanded(
                   child: Text(
                     _organizer(index),
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          _generateDivider(index)
+          _generateDivider(index),
         ],
       ),
       onTap: () {
