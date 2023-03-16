@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
-import 'package:contact_list/pages/contact_page.dart';
 import 'package:contact_list/models/contact_helper.dart';
-import 'dart:io';
+import 'package:contact_list/pages/contact_page.dart';
 
 class ContactBox extends StatefulWidget {
   final Map<String, List<Contact>> lettersContacts;
   final String letter;
 
-  const ContactBox(
-      {Key? key, required this.lettersContacts, required this.letter})
-      : super(key: key);
+  const ContactBox({
+    Key? key,
+    required this.lettersContacts,
+    required this.letter,
+  }) : super(key: key);
 
   @override
   State<ContactBox> createState() => _ContactBoxState();
 }
 
 class _ContactBoxState extends State<ContactBox> {
-
   ContactHelper helper = ContactHelper();
 
   @override
@@ -62,16 +62,16 @@ class _ContactBoxState extends State<ContactBox> {
         children: [
           Row(
             children: <Widget>[
-              CircleAvatar(
-                child: Text("oi"),
+              const CircleAvatar(
                 backgroundColor: Colors.blue,
+                child: Text("oi"),
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 17.0),
                   child: Text(
                     _organizer(index),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -117,11 +117,9 @@ class _ContactBoxState extends State<ContactBox> {
         builder: (context) => ContactPage(contact: contact),
       ),
     );
-    if (recContact != null){
-
+    if (recContact != null) {
       await helper.updateContact(recContact);
       helper.getAllContacts();
-
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:contact_list/constantes.dart';
 import 'package:contact_list/models/contact.dart';
 import 'package:contact_list/models/contact_helper.dart';
 import 'package:contact_list/widgets/contact_box.dart';
+import 'package:contact_list/widgets/card_contact.dart';
 import 'contact_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
+                const Text(
                   "Contatos",
                   style: TextStyle(
                     color: Colors.white,
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Row(
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.menu,
                         color: Colors.white,
                       ),
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             _showContactPage();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add,
                             color: Colors.white,
                           ),
@@ -73,13 +73,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.search,
                               color: Colors.white,
                             )),
                         IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.more_vert,
                               color: Colors.white,
                             )),
@@ -87,12 +87,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, bottom: 5),
-                  child: const Text(
+                const Padding(
+                  padding: EdgeInsets.only(left: 20.0, bottom: 5),
+                  child: Text(
                     "Meu perfil",
                     style: TextStyle(
                       color: Colors.white54,
@@ -101,29 +101,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 17),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: kbackgroundContact,
-                  ),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        child: Text("oi"),
-                        backgroundColor: Colors.blue,
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                          child: Text(
-                        "SDASD",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    ],
-                  ),
-                ),
+                const CardContact(),
                 generateContactBox(),
               ],
             ),
@@ -149,7 +127,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
     if (recContact != null){
-      print("O contato é ${recContact!.name}");
       if (contact == null){
         await helper.saveContact(recContact);
         _getAllContacts();
@@ -161,7 +138,6 @@ class _HomePageState extends State<HomePage> {
     helper.getAllContacts().then((map) {
       setState(() {
         lettersContacts = map;
-        print(lettersContacts.length);
       });
     });
   }

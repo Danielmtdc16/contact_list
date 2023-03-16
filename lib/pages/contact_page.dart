@@ -31,10 +31,7 @@ class _ContactPageState extends State<ContactPage> {
     if (widget.contact == null) {
       _editedContact = Contact();
     } else {
-      print("Entrei na contact Page");
-      print("O contato é : ${widget.contact!.name}");
-      print("O contato é : ${widget.contact!.phone}");
-      print("O contato é : ${widget.contact!.email}");
+
       _editedContact = Contact.fromMap(widget.contact!.toMap());
 
       _nameController.text = _editedContact!.name!;
@@ -65,7 +62,7 @@ class _ContactPageState extends State<ContactPage> {
                           ).image,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 CustomTextField(
@@ -79,7 +76,7 @@ class _ContactPageState extends State<ContactPage> {
                     });
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomTextField(
@@ -93,7 +90,7 @@ class _ContactPageState extends State<ContactPage> {
                     });
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomTextField(
